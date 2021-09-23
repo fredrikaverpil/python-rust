@@ -37,8 +37,8 @@ for whl in /io/wheelhouse/*.whl; do
     fi
 done
 
-# # Install packages and test
-# for PYBIN in /opt/python/*/bin/; do
-#     "${PYBIN}/pip" install python-manylinux-demo --no-index -f /io/wheelhouse
-#     (cd "$HOME"; "${PYBIN}/nosetests" pymanylinuxdemo)
-# done
+# Install packages and test
+for PYBIN in /opt/python/*/bin/; do
+    "${PYBIN}/pip" install mylib --no-index -f /io/dist
+    (cd /io/; "${PYBIN}/pytest" tests.py)
+done
