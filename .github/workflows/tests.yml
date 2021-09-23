@@ -42,23 +42,24 @@ jobs:
         pip install -r requirements.txt
 
     - name: Build and install
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.os != 'ubuntu-latest'
       run: |
-        if [ "$RUNNER_OS" != "Linux" ]; then
-          ${{ matrix.activate_cmd }}
-          cd package
-          python setup.py bdist_wheel
-        elif [ "$RUNNER_OS" == "Linux" ]; then
-          docker pull quay.io/pypa/manylinux_2_24_x86_64
-          docker run --rm -e PLAT=manylinux_2_24_x86_64 -v `pwd`:/io quay.io/pypa/manylinux_2_24_x86_64 /io/build-manylinux-wheels.sh
-        fi
+        ${{ matrix.activate_cmd }}
+        cd package
+        python setup.py bdist_wheel
         pip install .
-      shell: bash
 
     - name: Tests
       run: |
         ${{ matrix.activate_cmd }}
         pytest -v tests.py
+
+    - name: Build manylinux
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        docker pull quay.io/pypa/manylinux_2_24_x86_64
+        docker run --rm -e PLAT=manylinux_2_24_x86_64 -v `pwd`:/io quay.io/pypa/manylinux_2_24_x86_64 /io/build-manylinux-wheels.sh
+      shell: bash
 
     - name: Store wheel
       uses: actions/upload-artifact@v1
