@@ -1,0 +1,2 @@
+pytest
+setuptools-rust==0.12.1
