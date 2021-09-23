@@ -2,4 +2,4 @@ import mylib
 
 def test_mylib():
     data = "Hello world"
-    assert mylib.get_results(data) == f"Rust says: {data}"
+    assert mylib.get_result(data) == f"Rust says: {data}"
