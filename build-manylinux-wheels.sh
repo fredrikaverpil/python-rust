@@ -32,7 +32,9 @@ done
 # Store in dist folder
 mkdir -p /io/package/dist/
 for whl in /io/wheelhouse/*.whl; do
-    cp "$whl" /io/package/dist/
+    if [[ "$whl" == *"manylinux"* ]]; then
+        cp "$whl" /io/package/dist/
+    fi
 done
 
 # # Install packages and test
