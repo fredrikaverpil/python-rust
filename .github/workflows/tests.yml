@@ -44,8 +44,8 @@ jobs:
     - name: Build and install
       run: |
         if [ "$RUNNER_OS" != "Linux" ]; then
-          cd package
           ${{ matrix.activate_cmd }}
+          cd package
           python setup.py bdist_wheel
           pip install .
         elif [ "$RUNNER_OS" == "Linux" ]; then
