@@ -49,8 +49,8 @@ jobs:
           python setup.py bdist_wheel
           pip install .
         elif [ "$RUNNER_OS" == "Linux" ]; then
-          docker pull quay.io/pypa/manylinux2010_x86_64
-          docker run --rm -e PLAT=manylinux2010_x86_64 -v `pwd`:/io quay.io/pypa/manylinux2010_x86_64 /io/travis/build-wheels.sh
+          docker pull quay.io/pypa/manylinux_2_24_x86_64
+          docker run --rm -e PLAT=manylinux_2_24_x86_64 -v `pwd`:/io quay.io/pypa/manylinux_2_24_x86_64 /io/build-manylinux-wheels.sh
           ls wheelhouse
         fi
       shell: bash
