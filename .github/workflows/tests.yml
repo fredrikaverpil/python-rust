@@ -44,7 +44,7 @@ jobs:
     - name: Build and install
       run: |
         if [ "$RUNNER_OS" != "Linux" ]; then
-          ${{ matrix.activate_cmd }}
+          source .venv/bin/activate
           cd package
           python setup.py bdist_wheel
         elif [ "$RUNNER_OS" == "Linux" ]; then
@@ -64,9 +64,3 @@ jobs:
       with:
         name: wheel-${{ matrix.python-version }}
         path: package/dist
-
-    - name: Store wheelhouse
-      uses: actions/upload-artifact@v1
-      with:
-        name: wheel-${{ matrix.python-version }}
-        path: package/wheelhouse

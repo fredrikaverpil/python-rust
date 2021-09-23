@@ -39,6 +39,6 @@ done
 
 # Install packages and test
 for PYBIN in /opt/python/*/bin/; do
-    "${PYBIN}/pip" install mylib --no-index -f /io/dist
+    "${PYBIN}/pip" install /io/package --no-index -f /io/package/dist
     (cd /io/; "${PYBIN}/pytest" tests.py)
 done
