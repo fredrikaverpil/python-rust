@@ -37,8 +37,8 @@ for whl in /io/wheelhouse/*.whl; do
     fi
 done
 
-# Install packages and test
-for PYBIN in /opt/python/*/bin/; do
-    "${PYBIN}/pip" install /io/package --no-index -f /io/package/dist
-    (cd /io/; "${PYBIN}/pytest" tests.py)
-done
+# # Install packages and test
+# for PYBIN in /opt/python/*/bin/; do
+#     "${PYBIN}/pip" install /io/package --no-index -f /io/package/dist
+#     (cd /io/; "${PYBIN}/pytest" -v tests.py)
+# done
