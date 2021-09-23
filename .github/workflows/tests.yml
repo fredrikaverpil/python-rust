@@ -14,7 +14,6 @@ jobs:
         python-version: [3.9]
         os: [ubuntu-latest, macOS-latest, windows-latest]
         include:
-
           - os: ubuntu-latest
             activate_cmd: source .venv/bin/activate
             sudo: required
@@ -45,7 +44,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Build and install
-      if: ${{ matrix.os != 'ubuntu-latest' }}
+      if: matrix.os != 'ubuntu-latest'
       run: |
         ${{ matrix.activate_cmd }}
         cd package
@@ -53,7 +52,7 @@ jobs:
         pip install .
 
     - name: Build and install (manylinux)
-      if: ${{ matrix.os == 'ubuntu-latest' }}
+      if: matrix.os == 'ubuntu-latest'
       run: |
         ${{ matrix.activate_cmd }}
         cd package
