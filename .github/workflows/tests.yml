@@ -44,7 +44,7 @@ jobs:
         ${{ matrix.activate_cmd }}
         cd package
         python setup.py bdist_wheel
-        pip install dist/*.whl
+        pip install .
 
     - name: Tests
       run: |
