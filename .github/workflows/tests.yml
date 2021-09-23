@@ -12,10 +12,15 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [3.9]
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
         include:
+
           - os: ubuntu-latest
             activate_cmd: source .venv/bin/activate
+          - os: macOS-latest
+            activate_cmd: source .venv/bin/activate
+          - os: windows-latest
+            activate_cmd: .venv\Scripts\activate.ps1
 
     steps:
 
@@ -45,3 +50,9 @@ jobs:
       run: |
         ${{ matrix.activate_cmd }}
         pytest -v tests.py
+
+    - name: Store wheel
+      uses: actions/upload-artifact@v1
+      with:
+        name: wheel-${{ matrix.python-version }}
+        path: dist
