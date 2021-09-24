@@ -10,23 +10,19 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        manylinux: [manylinux1_x86_64, manylinux1_i686]
+        manylinux: [
+          manylinux2010_x86_64,
+          manylinux_2_24_x86_64
+          ]
         include:
           - os: ubuntu-latest
             sudo: required
             services:
               - docker
-          - manylinux: manylinux1_x86_64
-            MANYLINUX_PLAT: manylinux1
-            MANYLINUX_IMAGE: quay.io/pypa/manylinux1_x86_64
-          - manylinux: manylinux1_i686
-            PRE_CMD: linux32
-            MANYLINUX_PLAT: manylinux1_i686
-            MANYLINUX_IMAGE: quay.io/pypa/manylinux1_i686
-          # - manylinux: manylinux1_x86_64
-          #   env:
-          #     MANYLINUX_PLAT: manylinux1
-          #     MANYLINUX_IMAGE: quay.io/pypa/manylinux1_x86_64
+          - manylinux: manylinux2014_x86_64
+            manylinux_image: quay.io/pypa/manylinux2014_x86_64
+          - manylinux: manylinux_2_24_x86_64
+            manylinux_image: quay.io/pypa/manylinux_2_24_x86_64
     steps:
 
     - name: Check out repository
@@ -35,8 +31,8 @@ jobs:
     - name: Build manylinux
       # https://github.com/pypa/manylinux
       run: |
-        docker pull ${{ matrix.MANYLINUX_IMAGE }}
-        docker run --rm -e PLAT=${{ matrix.MANYLINUX_PLAT }} -v `pwd`:/io ${{ matrix.MANYLINUX_IMAGE }} ${{ matrix.PRE_CMD }} /io/build_manylinux.sh
+        docker pull ${{ matrix.manylinux_image }}
+        docker run --rm -e PLAT=${{ matrix.manylinux }} -v `pwd`:/io ${{ matrix.manylinux_image }} /io/build_manylinux.sh
 
     - name: Archive artifact
       uses: actions/upload-artifact@v2
