@@ -12,13 +12,13 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [3.9]
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [ubuntu-latest, macOS-latest, windows-2016]
         include:
           - os: ubuntu-latest
             activate_cmd: source .venv/bin/activate
           - os: macOS-latest
             activate_cmd: source .venv/bin/activate
-          - os: windows-latest
+          - os: windows-2016
             activate_cmd: .venv\Scripts\activate.ps1
 
     steps:
@@ -26,8 +26,9 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v2
 
-    - uses: GuillaumeFalourd/setup-windows10-sdk-action@v1
-      if: matrix.os == 'windows-latest'
+    - name: Install Windows SDK
+      uses: GuillaumeFalourd/setup-windows10-sdk-action@v1
+      if: matrix.os == 'windows-2016'
 
     - name: Install Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
