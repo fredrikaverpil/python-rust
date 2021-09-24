@@ -51,7 +51,6 @@ jobs:
     - name: Build and install
       run: |
         ${{ matrix.activate_cmd }}
-        cd package
         python setup.py bdist_wheel
         pip install .
 

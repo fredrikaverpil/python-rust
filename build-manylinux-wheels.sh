@@ -10,9 +10,6 @@ function repair_wheel {
     fi
 }
 
-# Install a system package required by our library
-# yum install -y atlas-devel
-
 # Install Rust
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -21,7 +18,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install --upgrade pip
     "${PYBIN}/pip" install -r /io/requirements.txt
-    "${PYBIN}/pip" wheel /io/package --no-deps -w /io/wheelhouse/
+    "${PYBIN}/pip" wheel /io --no-deps -w /io/wheelhouse/
 done
 
 # Bundle external shared libraries into the wheels
@@ -30,15 +27,9 @@ for whl in /io/wheelhouse/*.whl; do
 done
 
 # Store in dist folder
-mkdir -p /io/package/dist/
+mkdir -p /io/dist/
 for whl in /io/wheelhouse/*.whl; do
     if [[ "$whl" == *"manylinux"* ]]; then
-        cp "$whl" /io/package/dist/
+        cp "$whl" /io/dist/
     fi
 done
-
-# # Install packages and test
-# for PYBIN in /opt/python/*/bin/; do
-#     "${PYBIN}/pip" install /io/package --no-index -f /io/package/dist
-#     (cd /io/; "${PYBIN}/pytest" -v tests.py)
-# done
