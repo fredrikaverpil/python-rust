@@ -26,6 +26,9 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v2
 
+    - uses: GuillaumeFalourd/setup-windows10-sdk-action@v1
+      if: matrix.os == 'windows-latest'
+
     - name: Install Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
