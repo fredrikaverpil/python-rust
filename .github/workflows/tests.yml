@@ -16,10 +16,10 @@ jobs:
         include:
           - os: ubuntu-latest
             activate_cmd: source .venv/bin/activate
-          - os: macOS-latest
-            activate_cmd: source .venv/bin/activate
-          - os: windows-latest
-            activate_cmd: .venv\Scripts\activate.ps1
+          # - os: macOS-latest
+          #   activate_cmd: source .venv/bin/activate
+          # - os: windows-latest
+          #   activate_cmd: .venv\Scripts\activate.ps1
 
     steps:
 
@@ -42,8 +42,10 @@ jobs:
       run: |
         python -m venv .venv
         ${{ matrix.activate_cmd }}
+        pip freeze
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip freeze
 
     - name: Build
       run: |
