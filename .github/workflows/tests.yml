@@ -26,7 +26,7 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v2
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Install Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
@@ -56,6 +56,7 @@ jobs:
       run: |
         ${{ matrix.activate_cmd }}
         pip install dist/*.whl
+        pip freeze
 
     - name: Tests
       run: |
