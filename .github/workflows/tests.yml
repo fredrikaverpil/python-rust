@@ -45,11 +45,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Build and install
+    - name: Build
       run: |
         ${{ matrix.activate_cmd }}
         python setup.py bdist_wheel
-        pip install .
+
+    - name: Install
+      run: |
+        ${{ matrix.activate_cmd }}
+        pip install dist/*.whl
 
     - name: Tests
       run: |
