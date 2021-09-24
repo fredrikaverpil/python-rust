@@ -12,14 +12,14 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [3.9]
-        os: [ubuntu-latest] #, macOS-latest, windows-latest]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
         include:
           - os: ubuntu-latest
             activate_cmd: source .venv/bin/activate
-          # - os: macOS-latest
-          #   activate_cmd: source .venv/bin/activate
-          # - os: windows-latest
-          #   activate_cmd: .venv\Scripts\activate.ps1
+          - os: macOS-latest
+            activate_cmd: source .venv/bin/activate
+          - os: windows-latest
+            activate_cmd: .venv\Scripts\activate.ps1
 
     steps:
 
@@ -63,7 +63,13 @@ jobs:
           cat /etc/os-release
         fi
 
-    - name: Build
+    - name: Build wheel
+      if: matrix.os != "ubuntu-latest"
+      run: |
+        ${{ matrix.activate_cmd }}
+        python setup.py bdist_wheel --verbose
+
+    - name: Build wheel
       run: |
         ${{ matrix.activate_cmd }}
         python setup.py bdist_wheel --verbose
@@ -78,7 +84,7 @@ jobs:
       run: |
         ${{ matrix.activate_cmd }}
         pip install dist/*.whl
-        pip freeze
+      shell: bash
 
     - name: Tests
       run: |
