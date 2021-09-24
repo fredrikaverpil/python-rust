@@ -1,4 +1,5 @@
 pytest
+pytest-benchmark
 setuptools
 setuptools_rust
 wheel
