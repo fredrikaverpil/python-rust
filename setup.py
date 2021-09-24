@@ -5,7 +5,7 @@ from setuptools import find_packages
 from setuptools_rust import Binding, RustExtension
 
 setup(
-    name="mylib-rust",
+    name="mylib",
     setup_requires=["setuptools", "wheel", "setuptools-rust"],
     version="0.0.1",
     rust_extensions=[RustExtension(target="mylib.mylib", binding=Binding.RustCPython)],

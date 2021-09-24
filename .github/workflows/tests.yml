@@ -30,6 +30,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
+      run: python --version
 
     - name: Install Rust
       uses: actions-rs/toolchain@v1
@@ -37,6 +38,7 @@ jobs:
           toolchain: stable
           override: true
           components: rustfmt, clippy
+      run: rustc --version
 
     - name: Setup
       run: |
