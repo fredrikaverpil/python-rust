@@ -62,6 +62,7 @@ jobs:
           lsb_release -d
           cat /etc/os-release
         fi
+      shell: bash
 
     - name: Build wheel
       # if: matrix.os != 'ubuntu-latest'
