@@ -19,8 +19,7 @@ jobs:
           - os: macOS-latest
             activate_cmd: source .venv/bin/activate
           - os: windows-latest
-            # activate_cmd: .venv\Scripts\activate.ps1
-            activate_cmd: source .venv/bin/activate
+            activate_cmd: .venv\Scripts\activate.ps1
 
     steps:
 
@@ -50,7 +49,6 @@ jobs:
         python --version
         python -m site
         rustc --version
-      shell: bash
 
     - name: Versions
       run: |
@@ -64,14 +62,12 @@ jobs:
           lsb_release -d
           cat /etc/os-release
         fi
-      shell: bash
 
     - name: Build wheel
       # if: matrix.os != 'ubuntu-latest'
       run: |
         ${{ matrix.activate_cmd }}
         python setup.py bdist_wheel --verbose
-      shell: bash
 
     - name: Archive artifact
       uses: actions/upload-artifact@v2
@@ -82,11 +78,13 @@ jobs:
     - name: Install
       run: |
         ${{ matrix.activate_cmd }}
-        pip install dist/*.whl
-      shell: bash
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          python setup.py install
+        else
+          pip install dist/*.whl
+        fi
 
     - name: Tests
       run: |
         ${{ matrix.activate_cmd }}
         pytest -v tests.py
-      shell: bash
