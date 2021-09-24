@@ -6,6 +6,7 @@ edition = "2018"
 [lib]
 name = "mylib"
 crate-type = ["cdylib"]  # tells the compiler that our module will be a dynamic library: a .dll file on Windows, .so on Linux, or .dylib on Mac.
+path = "src/rust/lib.rs"
 
 [dependencies.cpython]
 version = "0.6.0"
