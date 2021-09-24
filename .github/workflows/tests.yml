@@ -16,9 +16,6 @@ jobs:
         include:
           - os: ubuntu-latest
             activate_cmd: source .venv/bin/activate
-            sudo: required
-            services:
-              - docker
           - os: macOS-latest
             activate_cmd: source .venv/bin/activate
           - os: windows-latest
@@ -59,15 +56,8 @@ jobs:
         ${{ matrix.activate_cmd }}
         pytest -v tests.py
 
-    - name: Build manylinux
-      if: matrix.os == 'ubuntu-latest'
-      run: |
-        docker pull quay.io/pypa/manylinux_2_24_x86_64
-        docker run --rm -e PLAT=manylinux_2_24_x86_64 -v `pwd`:/io quay.io/pypa/manylinux_2_24_x86_64 /io/build-manylinux-wheels.sh
-      shell: bash
-
     - name: Store wheel
       uses: actions/upload-artifact@v1
       with:
         name: wheels
-        path: package/dist
+        path: dist
