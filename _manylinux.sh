@@ -33,3 +33,10 @@ for whl in /io/wheelhouse/*.whl; do
         cp "$whl" /io/dist/
     fi
 done
+
+# Install packages and test
+for PYBIN in /opt/python/*/bin; do
+    "${PYBIN}/pip" install pytest
+    "${PYBIN}/pip" install mylib -f /io/dist/
+    "${PYBIN}/pytest" /io/tests.py
+done
