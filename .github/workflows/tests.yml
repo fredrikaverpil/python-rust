@@ -65,7 +65,7 @@ jobs:
         fi
 
     - name: Build wheel
-      if: ! startsWith(matrix.os, 'ubuntu')
+      if: matrix.os != 'ubuntu-latest'
       run: |
         ${{ matrix.activate_cmd }}
         python setup.py bdist_wheel --verbose
