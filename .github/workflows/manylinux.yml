@@ -35,8 +35,8 @@ jobs:
     - name: Build manylinux
       # https://github.com/pypa/manylinux
       run: |
-        docker pull $MANYLINUX_IMAGE
-        docker run --rm -e PLAT=$MANYLINUX_PLAT -v `pwd`:/io $MANYLINUX_IMAGE $PRE_CMD /io/build_manylinux.sh
+        docker pull ${{ matrix.MANYLINUX_IMAGE }}
+        docker run --rm -e PLAT=${{ matrix.MANYLINUX_PLAT }} -v `pwd`:/io ${{ matrix.MANYLINUX_IMAGE }} ${{ matrix.PRE_CMD }} /io/build_manylinux.sh
 
     - name: Archive artifact
       uses: actions/upload-artifact@v2
