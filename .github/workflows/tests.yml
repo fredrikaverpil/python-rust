@@ -78,11 +78,7 @@ jobs:
     - name: Install
       run: |
         ${{ matrix.activate_cmd }}
-        if [ "$RUNNER_OS" == "Windows" ]; then
-          python setup.py install
-        else
-          pip install dist/*.whl
-        fi
+        pip install mylib -f dist/
 
     - name: Tests
       run: |
