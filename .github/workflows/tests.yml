@@ -50,6 +50,7 @@ jobs:
         python --version
         python -m site
         rustc --version
+      shell: bash
 
     - name: Versions
       run: |
@@ -63,12 +64,14 @@ jobs:
           lsb_release -d
           cat /etc/os-release
         fi
+      shell: bash
 
     - name: Build wheel
       # if: matrix.os != 'ubuntu-latest'
       run: |
         ${{ matrix.activate_cmd }}
         python setup.py bdist_wheel --verbose
+      shell: bash
 
     - name: Archive artifact
       uses: actions/upload-artifact@v2
@@ -86,3 +89,4 @@ jobs:
       run: |
         ${{ matrix.activate_cmd }}
         pytest -v tests.py
+      shell: bash
