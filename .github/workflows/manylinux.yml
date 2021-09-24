@@ -10,10 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        manylinux: [
-          manylinux2010_x86_64,
-          manylinux_2_24_x86_64
-          ]
+        manylinux: [manylinux2014_x86_64, manylinux_2_24_x86_64]
         include:
           - os: ubuntu-latest
             sudo: required
