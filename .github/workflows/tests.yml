@@ -58,14 +58,13 @@ jobs:
         python -m site
         rustc --version
 
-        if [ "$RUNNER_OS" == "Linux" ]; then
-          lsb_release -d
-          cat /etc/os-release
-        fi
-      shell: bash
+    - name: Versions (linux)
+      if: matrix.os != 'ubuntu-latest'
+      run: |
+        lsb_release -d
+        cat /etc/os-release
 
     - name: Build wheel
-      # if: matrix.os != 'ubuntu-latest'
       run: |
         ${{ matrix.activate_cmd }}
         python setup.py bdist_wheel --verbose
