@@ -47,18 +47,32 @@ jobs:
         pip install -r requirements.txt
         pip freeze
         python --version
+        python -m site
         rustc --version
+
+    - name: Versions
+      run: |
+        ${{ matrix.activate_cmd }}
+        pip freeze
+        python --version
+        python -m site
+        rustc --version
+
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          lsb_release -d
+          cat /etc/os-release
+        fi
 
     - name: Build
       run: |
         ${{ matrix.activate_cmd }}
-        python setup.py bdist_wheel
+        python setup.py bdist_wheel --verbose
 
     - name: Archive artifact
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
         name: wheels
-        path: dist
+        path: dist/*.whl
 
     - name: Install
       run: |
