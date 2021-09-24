@@ -30,7 +30,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-      run: python --version
 
     - name: Install Rust
       uses: actions-rs/toolchain@v1
@@ -38,7 +37,6 @@ jobs:
           toolchain: stable
           override: true
           components: rustfmt, clippy
-      run: rustc --version
 
     - name: Setup
       run: |
@@ -48,11 +46,19 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip freeze
+        python --version
+        rustc --version
 
     - name: Build
       run: |
         ${{ matrix.activate_cmd }}
         python setup.py bdist_wheel
+
+    - name: Archive artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: wheels
+        path: dist
 
     - name: Install
       run: |
@@ -64,9 +70,3 @@ jobs:
       run: |
         ${{ matrix.activate_cmd }}
         pytest -v tests.py
-
-    - name: Archive artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: wheels
-        path: dist
