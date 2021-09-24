@@ -17,14 +17,12 @@ jobs:
             services:
               - docker
           - manylinux: manylinux1_x86_64
-            env:
-              MANYLINUX_PLAT: manylinux1
-              MANYLINUX_IMAGE: quay.io/pypa/manylinux1_x86_64
+            MANYLINUX_PLAT: manylinux1
+            MANYLINUX_IMAGE: quay.io/pypa/manylinux1_x86_64
           - manylinux: manylinux1_i686
-            env:
-              PRE_CMD: linux32
-              MANYLINUX_PLAT: manylinux1_i686
-              MANYLINUX_IMAGE: quay.io/pypa/manylinux1_i686
+            PRE_CMD: linux32
+            MANYLINUX_PLAT: manylinux1_i686
+            MANYLINUX_IMAGE: quay.io/pypa/manylinux1_i686
           # - manylinux: manylinux1_x86_64
           #   env:
           #     MANYLINUX_PLAT: manylinux1
