@@ -10,6 +10,12 @@ setup(
     version="0.0.1",
     rust_extensions=[RustExtension(target="mylib.mylib", binding=Binding.RustCPython)],
     package_dir={"": "src/python/"},
+    packages=find_packages(
+        where='src/python/',
+        include=['mylib*'],
+        # exclude=['additional'],
+    ),
+    include_package_data=True,
     # Rust extensions are not zip safe
     zip_safe=False
 )
