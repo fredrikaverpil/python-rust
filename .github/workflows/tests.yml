@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [3.9]
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [ubuntu-latest] #, macOS-latest, windows-latest]
         include:
           - os: ubuntu-latest
             activate_cmd: source .venv/bin/activate
