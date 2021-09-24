@@ -38,7 +38,7 @@ jobs:
           override: true
           components: rustfmt, clippy
 
-    - name: Create venv
+    - name: Setup
       run: |
         python -m venv .venv
         ${{ matrix.activate_cmd }}
@@ -50,12 +50,6 @@ jobs:
         ${{ matrix.activate_cmd }}
         python setup.py bdist_wheel
 
-    - name: Store wheel
-      uses: actions/upload-artifact@v1
-      with:
-        name: wheels
-        path: dist
-
     - name: Install
       run: |
         ${{ matrix.activate_cmd }}
@@ -65,3 +59,9 @@ jobs:
       run: |
         ${{ matrix.activate_cmd }}
         pytest -v tests.py
+
+    - name: Archive artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: wheels
+        path: dist
