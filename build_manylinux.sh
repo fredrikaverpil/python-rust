@@ -15,7 +15,7 @@ curl https://sh.rustup.rs -sSf | sh -s -- -y
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # Compile wheels
-for PYBIN in /opt/python/*/bin; do
+for PYBIN in /opt/python/cp*/bin; do
     "${PYBIN}/pip" install --upgrade pip
     "${PYBIN}/pip" install -r /io/requirements.txt
     "${PYBIN}/pip" wheel /io --no-deps -w /io/wheelhouse/
@@ -35,7 +35,7 @@ for whl in /io/wheelhouse/*.whl; do
 done
 
 # Install packages and test
-for PYBIN in /opt/python/*/bin; do
+for PYBIN in /opt/python/cp*/bin; do
     "${PYBIN}/pip" install pytest
     "${PYBIN}/pip" install mylib -f /io/dist/
     "${PYBIN}/pytest" /io/tests.py
